@@ -37,14 +37,6 @@ def carregar_logins():
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-""" Funcao para salvar login do pacientes """
-def salvar_logins_pacientes(logins_pacientes):
-    try:
-        with open('logins_pacientes.json', 'w', encoding='utf-8') as file:
-            json.dump(logins_pacientes, file, indent=4, ensure_ascii=False)
-    except Exception as e:
-        print(f"Erro ao salvar os logins de pacientes: {e}")
-
 """ Funcao para cadastrar pacientes """
 def cadastrar_paciente(pacientes, logins_pacientes):
     novo_paciente = input('Digite o nome do paciente: ')
@@ -61,7 +53,7 @@ def cadastrar_paciente(pacientes, logins_pacientes):
         'tipo': 'Paciente',
     })
 
-    salvar_pacientes(pacientes)
+    salvar_login_pacientes(pacientes)
 
     logins_pacientes.append({
         'id': id_paciente,
@@ -71,7 +63,7 @@ def cadastrar_paciente(pacientes, logins_pacientes):
         'tipo': 'Paciente',
     })
 
-    salvar_logins_pacientes(logins_pacientes)
+    salvar_login_pacientes(logins_pacientes)
 
     print(f'Paciente cadastrado com sucesso. Seu ID é {id_paciente}. Faça login para continuar.')
 
@@ -195,7 +187,7 @@ def carregar_usuarios():
 """ Função para carregar os dados de pacientes do arquivo JSON """
 def carregar_pacientes():
     try:
-        with open('pacientes.json', 'r', encoding='utf-8') as file:
+        with open('usuario.json', 'r', encoding='utf-8') as file:
             dados = json.load(file)
 
             if not dados or not isinstance(dados, list):
@@ -221,7 +213,15 @@ def salvar_usuarios(usuarios, nome_arquivo='loginusuarios.json'):
         print(f"Erro ao salvar os dados: {e}")
 
 """ Função para salvar os dados dos pacientes no arquivo JSON """
-def salvar_pacientes(pacientes, nome_arquivo='pacientes.json'):
+def salvar_pacientes(pacientes, nome_arquivo='usuario.json'):
+    try:
+        with open(nome_arquivo, 'w', encoding='utf-8') as file:
+            json.dump(pacientes, file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"Erro ao salvar os dados: {e}")
+
+""" Função para salvar os dados dos pacientes no arquivo JSON """
+def salvar_login_pacientes(pacientes, nome_arquivo='logins_pacientes.json'):
     try:
         with open(nome_arquivo, 'w', encoding='utf-8') as file:
             json.dump(pacientes, file, indent=4, ensure_ascii=False)
@@ -676,7 +676,7 @@ if __name__ == "__main__":
             print('Programa encerrado.')
             salvar_pacientes(pacientes)
             salvar_usuarios(usuarios)
-            salvar_logins_pacientes(logins_pacientes)
+            salvar_login_pacientes(logins_pacientes)
             break
 
         else:
