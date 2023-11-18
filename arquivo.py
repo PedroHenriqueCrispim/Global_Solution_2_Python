@@ -16,7 +16,7 @@ def fazer_login(tipo_usuario, usuarios, pacientes):
                     print('Login bem-sucedido!')
                     return usuario['id'], tipo_usuario
         elif tipo_usuario == 'paciente':
-            logins_pacientes = carregar_logins('pacientes')
+            logins_pacientes = carregar_logins()
             for login_paciente in logins_pacientes:
                 if login_paciente['nome'] == nome_usuario and login_paciente['senha'] == senha:
                     print('Login bem-sucedido como paciente!')
